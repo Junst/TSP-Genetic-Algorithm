@@ -7,11 +7,12 @@ import time
 
 MUTATION_RATE = 40
 MUTATION_COUNT = 2
-THRESHOLD = 36000
+THRESHOLD = 35000
+UNIFORMCROSSOVER_RATE = 0.5
 
 csvfile = 'TSP.csv'
 
-def read_csv(csvf):
+def read_csv(csvf): #csv 파일 읽기, csv file read
     City = np.genfromtxt(open(csvf, "rb"),dtype=float, delimiter=",", skip_header=0)
     print(City)
     return City
@@ -62,6 +63,7 @@ def findBestGenome(population):
     bestFitness = min(allFitness)
     return population[allFitness.index(bestFitness)]
 
+#선택 연산 _ Selection
 '''
 def roulette_wheel_selection(population):
     population_fitness = sum([chromosome.fitness for chromosome in population])
@@ -90,6 +92,7 @@ def Reproduction(population):
 def randRange(first,last):
     return random.randint(first,last)
 
+#교차 연산 _ Crossover
 '''
 def SinglePointCrossover(parent1, parent2) :
     child = Genome(None)
@@ -157,24 +160,24 @@ def PMXCrossover (parent1, parent2) :
     child.fitness = Evaluate(child.chromosomes)
     return child
 
-def UniformCrossover(parent1, parent2) :  
-    child = Genome(None)
-    child.chromosomes = []
+def UniformCrossover(parent1, parent2) :
+    size = len(parent1)
+    child = [-1] * size
+    child[0], child[size - 1] = 0, 0
 
-    for i in range(0, len(parent1)) :
-        rnd = random.uniform(0,1)
-        if (rnd > UNIFORMCROSSOVER_RATE) :
-            tmp = parent1[i]
-            parent1[i] = parent2[i]
-            parent2[i] = tmp
-    child.chromosomes.append(parent1)
-    child.chromosomes.append(parent2)
+    for i in range(1, size - 1):
+        if random.randrange(0, 100) < UNIFORMCROSSOVER_RATE:
+            child[i] = parent1[i]
+        else:
+            child[i] = parent2[i]
 
     if random.randrange(0, 100) < MUTATION_RATE:
-        child.chromosomes = SwapMutation(child.chromosomes)
+        child = SwapMutation(child)
 
-    child.fitness = Evaluate(child.chromosomes)
-    return child
+    newGenome = Genome()
+    newGenome.chromosomes = child
+    newGenome.fitness = Evaluate(child)
+    return newGenome
 '''
 
 def OrderCrossover(parent1, parent2):
@@ -198,9 +201,10 @@ def OrderCrossover(parent1, parent2):
     child.fitness = Evaluate(child.chromosomes)
     return child
 
+#변이 연산 _ Mutation
 '''
 def SwapMutation(chromo):
-    for x in range(MUTATION_REPEAT_COUNT):
+    for x in range(MUTATION_COUNT):
         p1, p2 = [random.randrange(1, len(chromo) - 1) for i in range(2)]
         while p1 == p2:
             p2 = random.randrange(1, len(chromo) - 1)
@@ -210,7 +214,7 @@ def SwapMutation(chromo):
     return chromo
 
 def ScrambleMutation(chromo) :
-    for x in range(MUTATION_REPEAT_COUNT):
+    for x in range(MUTATION_COUNT):
         p1, p2 = [random.randrange(1, len(chromo) - 1) for i in range(2)]
         while p1 == p2 or p1 > p2:
             p1 = random.randint(0, len(chromo) - 1)
@@ -220,7 +224,6 @@ def ScrambleMutation(chromo) :
         chromo = chromo[:p1] + log +chromo[p2:]
     return chromo
 '''
-
 def InversionMutation(chromo) :
     for x in range(MUTATION_COUNT):
         p1, p2 = [random.randrange(1, len(chromo) - 1) for i in range(2)]
@@ -232,6 +235,7 @@ def InversionMutation(chromo) :
         chromo = chromo[:p1] + log +chromo[p2:]
     return chromo
 
+#시각화 _ Visualization
 def fitness_plot(generation, allBestFitness):
     plt.plot(range(0, generation), allBestFitness, c='blue')
     plt.xlabel('Generations')
@@ -242,11 +246,11 @@ def fitness_plot(generation, allBestFitness):
 def city_visualize(bestGenome, city):
     start = None
     for x, y in city:
-        if start is None:#시작지점이면 표시
+        if start is None: #시작지점이면 표시
             start = city[0]
             plt.scatter(start[0], start[1], c="green", marker=">")
             plt.annotate("Start", (x + 2, y - 2), color='red')
-        else:#시작지점 아니면
+        else: #시작지점 아니면
             plt.scatter(x, y, marker='.', s=10, c="black")
 
     #edge 표현을 위한 x, y 범위
@@ -294,12 +298,13 @@ def GeneticAlgorithm(populationSize, Generation_Count):
     
     end = time.time()
     
-    print("Total time : ", end-start)
+    print("Total time : ", end-start) # 소요 시간 표기, Working Time
     
     #시각화
     fitness_plot(generation, allBestFitness)
     city_visualize(bestGenome, cityCoordinates)
-    
+
+    #csv 파일 경로 저장
     f = open('temp.csv', 'w', newline='')
     wr = csv.writer(f)
     for i in range(0, citySize):
@@ -307,4 +312,4 @@ def GeneticAlgorithm(populationSize, Generation_Count):
     f.close()
 
 if __name__ == "__main__":
-    GeneticAlgorithm(populationSize=15, Generation_Count=3000)
+    GeneticAlgorithm(populationSize=15, Generation_Count=5000) #Population size, Generation Count 입력
