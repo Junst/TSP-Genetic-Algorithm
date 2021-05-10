@@ -38,11 +38,12 @@ Tournament selection은 염색체를 임의의 개수로 선택하여 Tournament
 
 ## Order Crossover
 Order Crossover 방식은 염색체가 순열로 표시되는 경우을 위하여 고안된 교차 연산자이다. 먼저 임의로 두 개의 자름선을 정한 다음 두 자름선 사이에 있는 첫 번째 부모의 염색체 부분을 복사한다. 나머지 위치는 두 번째 부모의 염색체 부분에서 두 번째 자름선 바로 다음 위치부터 사용되지 않은 유전자들을 순서대로 복사한다. 
+![alt text](https://www.researchgate.net/profile/Shuihua-Wang/publication/282998951/figure/fig4/AS:433588496801795@1480386961920/An-example-of-order-crossover.png)
 
 ## Partially Matched Crossover(PMX)
 PMX 방식은 Goldberg & Lingle이 고안한 교차 연산자이다. 두 부모해의 임의로 두 개의 자름선을 정한 다음 두 자름선 사이에 있는 부분을 첫번째 부모해로부터 복사한다. 나머지 위치는 두번째 부모해로부터 복사하되 만일 해당 값이 사용되었으면 같은 값을 가진 첫번째 부모해의 위치를 찾아 같은 위치의 두번째 부모해로부터 복사한다. 이 값은 사용되지 않을 수도, 사용되었을 수도 있는데, 마지막 과정에서 이미 사용되어 중복이 일어난 유전자를 고쳐준다. 
 Order Crossover 방식은 염색체가 순열로 표시되는 경우을 위하여 고안된 교차 연산자이다. 먼저 임의로 두 개의 자름선을 정한 다음 두 자름선 사이에 있는 첫 번째 부모의 염색체 부분을 복사한다. 나머지 위치는 두 번째 부모의 염색체 부분에서 두 번째 자름선 바로 다음 위치부터 사용되지 않은 유전자들을 순서대로 복사한다. 
-
+![alt text](https://i.stack.imgur.com/ArNsG.png)
 
 최종적으로 Crossover에서 우리가 채택한 교차 연산자는 Order Crossover(순서 교차)였다. 일점 교차와 다점 교차, 균등 교차 연산은 중복 방문 도시 혹은 미방문 도시가 자식해에서 발생해서 채택할 수가 없었다. 반면 Order Crossover(순서 교차)와 PMX 교차 연산 중에서 Average Fitness 값은 Order Crossover가 더 적게 나왔다. 따라서 Order Crossover 방식이 다른 연산자의 비해 자식해의 값이 최적화가 더 잘 되어 있는 것을 알 수 있었다. 
 
