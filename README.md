@@ -1,6 +1,11 @@
-TSP.csv - The Coordinate value of 1000 cities
+TSP.csv - The Coordinate value of 1000 cities (example)
+
 TSP_GA.psy - The python code of Genetic Algorithm
+
 solutuon2.csv, temp.csv = The solutuon(Result) of Algorithm File
+
+visualization_cities.PNG = The visualization of 1000 cities (example)
+
 
 # TSP-Genetic-Algorithm
 유전 알고리즘은 자연에서 얻은 진화과정에 기초한 계산 모델로서 존 홀랜드(John Holland)에 의해서 1975년에 개발된 전역 최적화 기법으로, 최적화 문제를 해결하는 기법의 하나이다. 생물의 진화를 모방한 진화 연산의 대표적인 기법으로, 실제 진화의 과정에서 많은 부분을 차용하였으며, 변이(돌연변이), 교배 연산 등이 존재한다. 또한 세대, 인구 등의 용어도 문제 풀이 과정에서 사용된다. 
