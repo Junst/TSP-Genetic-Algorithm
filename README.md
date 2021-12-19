@@ -76,6 +76,7 @@ TSP 문제를 풀기 위한 유전 알고리즘에서는 핵심적인 연산자�
 
 
 # Discussion and Conclusion
+![image](https://github.com/Junst/TSP-Genetic-Algorithm/blob/master/visualization_cities.PNG)
 
 결론적으로 임계값은 35000~50000의 범위에서 1000 단위로 값을 달리하여 실험을 진행한 결과, 임계값이 낮을수록 적합도가 더 좋게 나타났으나, 임계값을 너무 낮게 설정하면 모집단의 다양성이 떨어지고 시간이 오래 걸린다는 단점이 있기 때문에 우리 연구에서는 36000으로 설정하였다. 또한 Population Size는 실행시간이 크게 달라지는 데 비해 적합도를 발전시키는 데 유의미한 영향을 끼치지 못했기 때문에 간단히 15로 설정하였고, Generation Count 역시 비슷하나 Population Size보다는 적합도에 더 도움을 주었다고 판단되어 최종적으로 3000으로 설정하였다.
 
